@@ -1,13 +1,11 @@
-package ru.dmitartur.service.interf;
-
-
+package ru.dmitartur.dao.abstraction;
 
 import ru.dmitartur.model.User;
 
 import java.util.List;
 
+public interface UserDAO {
 
-public interface UserService {
     User get(String login, String password);
     List<User> getAll();
     void add(User t);

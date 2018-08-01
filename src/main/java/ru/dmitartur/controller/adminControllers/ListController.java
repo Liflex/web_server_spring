@@ -1,31 +1,29 @@
 package ru.dmitartur.controller.adminControllers;
 
-import ru.arthur.webserver.service.imple.UserServiceImpl;
-import ru.arthur.webserver.service.interf.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.dmitartur.model.User;
+import ru.dmitartur.service.abstraction.UserService;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-@WebServlet( urlPatterns = {"/adminControllers/list"} )
-public class ListController extends HttpServlet {
+@Controller
+@RequestMapping(value="/admin")
+public class ListController {
 
-    private final static Logger log = Logger.getLogger(ListController.class.getName());
-
-    private final UserService userService = new UserServiceImpl();
+    @Autowired
+    public UserService userService;
 
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("getAll");
-        req.setAttribute("Users", userService.getAll());
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("list.jsp");
-        requestDispatcher.forward(req, resp);
+    @GetMapping("/list")
+    public String getAllUsers(Model model) {
+        model.addAttribute("Users", userService.getAll());
+        model.addAttribute("User", new User());
+        return "list";
     }
-
 }

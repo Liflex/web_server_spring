@@ -1,36 +1,32 @@
 package ru.dmitartur.controller.adminControllers;
 
-import ru.arthur.webserver.model.User;
-import ru.arthur.webserver.service.imple.UserServiceImpl;
-import ru.arthur.webserver.service.interf.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.dmitartur.model.User;
+import ru.dmitartur.service.abstraction.UserService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.logging.Logger;
 
-@WebServlet(urlPatterns = {"/adminControllers/update"})
-public class UpdateController extends HttpServlet {
+@Controller
+@RequestMapping(value="/admin")
+public class UpdateController {
 
-    private final static Logger log = Logger.getLogger(UpdateController.class.getName());
+    @Autowired
+    public UserService userService;
 
-    private final UserService userService = new UserServiceImpl();
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @PostMapping("/update")
+    protected  String updateUser(HttpServletRequest req) {
         try {
-            log.info("update");
             userService.update(new User(Integer.parseInt(req.getParameter("id")),
-                        req.getParameter("name"),
-                        req.getParameter("login"),
-                        req.getParameter("pass"),
-                        req.getParameter("role")));
+                    req.getParameter("name"),
+                    req.getParameter("login"),
+                    req.getParameter("pass"),
+                    req.getParameter("role")));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/adminControllers/list");
+        return "redirect:/admin/list";
     }
 }

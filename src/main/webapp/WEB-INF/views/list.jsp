@@ -11,7 +11,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Users list</title>
@@ -23,12 +23,12 @@
         <div class="w3-container w3-light-blue">
             <h2>Users</h2>
         </div>
-        <form method="Post">
-            Name: <input type="text" name="name" required/>
-            Login: <input type="text" name="login" required/>
-            Password : <input type="text" name="pass" required/>
-            <input type="submit" formaction="/admin/add" value="add new User">
-        </form>
+        <form:form action="/admin/add" method="post" modelAttribute="User" >
+            <p>Name: <form:input path="name" /> </p>
+            <p>Login: <form:input path="login" /> </p>
+            <p>Password: <form:input path="password" /> </p>
+            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        </form:form>
         <ul>
             <ul class="w3-ul">
                 <c:forEach items="${Users}" var="users">
@@ -37,11 +37,11 @@
                         Login: <input type="text" name="login" value= ${users.login}>
                         Password: <input type="text" name="pass" value= ${users.password}>
                         Role: <select name="role">
-                        <c:if test="${users.role == 'adminControllers'}">
+                        <c:if test="${users.role == 'admin'}">
                         <option value="admin">admin</option>
                         <option value="user">user</option>
                         </c:if>
-                        <c:if test="${users.role == 'userControllers'}">
+                        <c:if test="${users.role == 'user'}">
                         <option value="user">user</option>
                         <option value="admin">admin</option>
                         </c:if>

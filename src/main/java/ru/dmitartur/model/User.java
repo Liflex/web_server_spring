@@ -1,12 +1,15 @@
 package ru.dmitartur.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Component
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -16,14 +19,11 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
     @Column
     private String name;
 
-
     @Column
     private String login;
-
 
     @Column
     private String password;
@@ -32,6 +32,7 @@ public class User implements Serializable {
     private String role;
 
     public User() {
+        role = "user";
     }
 
     public User(long id) {

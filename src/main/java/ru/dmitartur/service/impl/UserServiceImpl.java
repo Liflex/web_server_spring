@@ -1,16 +1,20 @@
-package ru.dmitartur.service.imple;
+package ru.dmitartur.service.impl;
 
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.dmitartur.dao.interf.UserDAO;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import ru.dmitartur.dao.abstraction.UserDAO;
 import ru.dmitartur.model.User;
-import ru.dmitartur.service.interf.UserService;
+import ru.dmitartur.service.abstraction.UserService;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
 
+    @Qualifier("userDAOHibernateImpl")
     @Autowired
     private UserDAO userDAO;
 

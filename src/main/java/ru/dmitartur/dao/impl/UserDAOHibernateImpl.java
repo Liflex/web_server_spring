@@ -1,27 +1,23 @@
-package ru.dmitartur.dao.imple;
+package ru.dmitartur.dao.impl;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.dmitartur.dao.interf.UserDAO;
+import ru.dmitartur.dao.abstraction.UserDAO;
 import ru.dmitartur.model.User;
-
 
 import java.util.List;
 
+@Repository
 public class UserDAOHibernateImpl  implements UserDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-
-    public UserDAOHibernateImpl() {
-
-    }
 
     @Transactional (propagation = Propagation.REQUIRED)
     @Override
@@ -35,43 +31,34 @@ public class UserDAOHibernateImpl  implements UserDAO {
 
 
     @Transactional (propagation = Propagation.REQUIRED)
-    @Cacheable("users")
+    @Cacheable(value = "users")
     @Override
     public List<User> getAll() {
         return (List<User>) sessionFactory.getCurrentSession().createQuery("From User").list();
     }
 
     @Transactional (propagation = Propagation.REQUIRED)
-    @CacheEvict("users")
+    @CacheEvict(value = "users", allEntries=true)
     @Override
     public void add(User t) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
         session.save(t);
-        transaction.commit();
-        session.close();
     }
 
     @Transactional (propagation = Propagation.REQUIRED)
-    @CacheEvict("users")
+    @CacheEvict(value = "users", allEntries=true)
     @Override
     public void update(User t) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
         session.saveOrUpdate(t);
-        transaction.commit();
-        session.close();
     }
 
     @Transactional (propagation = Propagation.REQUIRED)
-    @CacheEvict("users")
+    @CacheEvict(value = "users", allEntries=true)
     @Override
     public void delete(long id) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
         session.delete(new User(id));
-        transaction.commit();
-        session.close();
     }
 
 }

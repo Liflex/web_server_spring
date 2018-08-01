@@ -1,31 +1,29 @@
 package ru.dmitartur.controller.adminControllers;
 
-import ru.arthur.webserver.service.imple.UserServiceImpl;
-import ru.arthur.webserver.service.interf.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import ru.dmitartur.service.abstraction.UserService;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.logging.Logger;
 
-@WebServlet(urlPatterns = {"/adminControllers/delete"})
-public class DeleteController extends HttpServlet {
+@Controller
+@RequestMapping(value="/admin")
+public class DeleteController {
 
-    private final static Logger log = Logger.getLogger(DeleteController.class.getName());
+    @Autowired
+    public UserService userService;
 
-    private final UserService userService = new UserServiceImpl();
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @PostMapping("/delete")
+    protected  String deleteUser(HttpServletRequest req) {
         try {
-            log.info("delete");
             userService.delete(Integer.parseInt(req.getParameter("id")));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/adminControllers/list");
+        //resp.sendRedirect("/admin/list");
+        return "redirect:/admin/list";
     }
 }

@@ -1,35 +1,31 @@
 package ru.dmitartur.controller.adminControllers;
 
-import ru.arthur.webserver.model.User;
-import ru.arthur.webserver.service.imple.UserServiceImpl;
-import ru.arthur.webserver.service.interf.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.dmitartur.model.User;
+import ru.dmitartur.service.abstraction.UserService;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.logging.Logger;
+import javax.validation.Valid;
 
-@WebServlet(urlPatterns = {"/adminControllers/add"})
-public class AddController extends HttpServlet {
+@Controller
+@RequestMapping(value="/admin")
+public class AddController {
 
-    private final static Logger log = Logger.getLogger(AddController.class.getName());
+    @Autowired
+    public UserService userService;
 
-    private final UserService userService = new UserServiceImpl();
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    @PostMapping("/add")
+    protected  String addUser(User user) {
         try {
-            userService.add(new User(req.getParameter("name"),
-                    req.getParameter("login"),
-                    req.getParameter("pass"),
-                    "userControllers"));
+            userService.add(user);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/adminControllers/list");
+        return "redirect:/admin/list";
     }
 
 }
