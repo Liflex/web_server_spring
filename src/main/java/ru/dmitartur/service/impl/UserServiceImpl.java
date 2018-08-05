@@ -14,13 +14,16 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Qualifier("userDAOHibernateImpl")
+    private final UserDAO userDAO;
+
     @Autowired
-    private UserDAO userDAO;
+    public UserServiceImpl(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Override
-    public User get(String login, String password) {
-        return userDAO.get(login, password);
+    public User get(String login) {
+        return userDAO.get(login);
     }
 
     @Override

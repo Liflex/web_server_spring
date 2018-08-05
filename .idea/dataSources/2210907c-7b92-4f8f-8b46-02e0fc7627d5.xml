@@ -1104,35 +1104,58 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="277" parent="3" name="users"/>
-    <column id="278" parent="277" name="id">
+    <table id="277" parent="3" name="user_role"/>
+    <table id="278" parent="3" name="users"/>
+    <column id="279" parent="277" name="user_id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="280" parent="277" name="roles">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="281" parent="277" name="FKj345gk1bovqvfame88rcx7yyx">
+      <ColNames>user_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <foreign-key id="282" parent="277" name="FKj345gk1bovqvfame88rcx7yyx">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>listusers</RefSchemaName>
+      <RefTableName>users</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="283" parent="278" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="277" name="login">
+    <column id="284" parent="278" name="active">
       <Position>2</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>bit(1)|0s</DataType>
+      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="277" name="name">
+    <column id="285" parent="278" name="login">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="277" name="password">
+    <column id="286" parent="278" name="name">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="277" name="role">
+    <column id="287" parent="278" name="password">
       <Position>5</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="283" parent="277" name="PRIMARY">
+    <key id="288" parent="278" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

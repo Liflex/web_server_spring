@@ -1,9 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.HashSet" %>
-<%@ page import="ru.dmitartur.model.User" %>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %><%--
+<%--
   Created by IntelliJ IDEA.
   ru.arthur.webserver.model
   Date: 23.06.2018
@@ -12,6 +8,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
     <title>Users list</title>
@@ -23,27 +21,26 @@
         <div class="w3-container w3-light-blue">
             <h2>Users</h2>
         </div>
-        <form:form action="/admin/add" method="post" modelAttribute="User" >
-            <p>Name: <form:input path="name" /> </p>
-            <p>Login: <form:input path="login" /> </p>
-            <p>Password: <form:input path="password" /> </p>
-            <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+        <form:form action="${contextPath}/admin/add" method="post" modelAttribute="User">
+            <p>Login: <form:input path="username"/></p>
+            <p>Password: <form:input path="password"/></p>
+            <p><input type="submit" value="Submit"/> <input type="reset" value="Reset"/></p>
         </form:form>
         <ul>
             <ul class="w3-ul">
                 <c:forEach items="${Users}" var="users">
                     <form method="Post">
                         Name: <input type="text" name="name" value= ${users.name}>
-                        Login: <input type="text" name="login" value= ${users.login}>
+                        Login: <input type="text" name="username" value= ${users.username}>
                         Password: <input type="text" name="pass" value= ${users.password}>
                         Role: <select name="role">
                         <c:if test="${users.role == 'admin'}">
-                        <option value="admin">admin</option>
-                        <option value="user">user</option>
+                            <option value="admin">admin</option>
+                            <option value="user">user</option>
                         </c:if>
                         <c:if test="${users.role == 'user'}">
-                        <option value="user">user</option>
-                        <option value="admin">admin</option>
+                            <option value="user">user</option>
+                            <option value="admin">admin</option>
                         </c:if>
                     </select>
 
@@ -61,7 +58,7 @@
 </div>
 <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
     <form method="Get">
-        <button type="submit" formaction="/" class="w3-btn w3-round-large">Back to login menu</button>
+        <button type="submit" formaction="/" class="w3-btn w3-round-large">Back to username menu</button>
     </form>
 
 </div>

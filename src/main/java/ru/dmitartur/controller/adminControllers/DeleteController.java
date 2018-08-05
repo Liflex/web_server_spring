@@ -13,8 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value="/admin")
 public class DeleteController {
 
+    public final UserService userService;
+
     @Autowired
-    public UserService userService;
+    public DeleteController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/delete")
     protected  String deleteUser(HttpServletRequest req) {

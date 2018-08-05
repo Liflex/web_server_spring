@@ -1,6 +1,8 @@
 package ru.dmitartur.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -11,7 +13,6 @@ import javax.servlet.ServletRegistration;
 
 @Configuration
 public class WebAppStart implements WebApplicationInitializer {
-
     @Override
     public void onStartup(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();

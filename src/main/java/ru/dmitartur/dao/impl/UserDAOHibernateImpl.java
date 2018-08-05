@@ -16,18 +16,22 @@ import java.util.List;
 @Repository
 public class UserDAOHibernateImpl  implements UserDAO {
 
+    private final SessionFactory sessionFactory;
+
     @Autowired
-    private SessionFactory sessionFactory;
+    public UserDAOHibernateImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Transactional (propagation = Propagation.REQUIRED)
     @Override
-    public User get(String login, String password) {
+    public User get(String login) {
         return (User) sessionFactory.getCurrentSession()
-                .createQuery("From User u WHERE u.login = ?1 AND u.password = ?2")
+                .createQuery("From User u WHERE u.login = ?1")
                 .setParameter(1, login)
-                .setParameter(2, password)
                 .uniqueResult();
     }
+
 
 
     @Transactional (propagation = Propagation.REQUIRED)

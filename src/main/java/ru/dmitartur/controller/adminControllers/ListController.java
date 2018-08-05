@@ -16,8 +16,12 @@ import java.util.ResourceBundle;
 @RequestMapping(value="/admin")
 public class ListController {
 
+    public final UserService userService;
+
     @Autowired
-    public UserService userService;
+    public ListController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping("/list")
