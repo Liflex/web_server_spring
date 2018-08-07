@@ -1,36 +1,32 @@
-package ru.dmitartur.controller.adminControllers;
+package ru.dmitartur.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.dmitartur.model.User;
 import ru.dmitartur.service.abstraction.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value="/admin")
-public class UpdateController {
+public class DeleteController {
 
     public final UserService userService;
 
     @Autowired
-    public UpdateController(UserService userService) {
+    public DeleteController(UserService userService) {
         this.userService = userService;
     }
 
-    @PostMapping("/update")
-    protected  String updateUser(HttpServletRequest req) {
+    @PostMapping("/delete")
+    protected  String deleteUser(HttpServletRequest req) {
         try {
-//            userService.update(new User(Integer.parseInt(req.getParameter("id")),
-//                    req.getParameter("name"),
-//                    req.getParameter("login"),
-//                    req.getParameter("pass"),
-//                    req.getParameter("role")));
+            userService.delete(Integer.parseInt(req.getParameter("id")));
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //resp.sendRedirect("/admin/list");
         return "redirect:/admin/list";
     }
 }

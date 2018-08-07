@@ -11,13 +11,13 @@ import ru.dmitartur.service.abstraction.UserService;
 import java.util.ResourceBundle;
 
 @Component
-public class UserValidatorImpl implements Validator {
+public class UserValidatorRegistration implements Validator {
 
     private final UserService userService;
 
 
     @Autowired
-    public UserValidatorImpl(UserService userService) {
+    public UserValidatorRegistration(UserService userService) {
         this.userService = userService;
     }
 
@@ -35,17 +35,17 @@ public class UserValidatorImpl implements Validator {
             errors.rejectValue("username", "Size.userForm.username", "Username must be between 4 and 32 characters.");
         }
 
-//        if (userService.get(user.getUsername()) != null) {
-//            errors.rejectValue("username","Duplicate.userForm.username", "Such username already exists.");
-//        }
+        if (userService.get(user.getUsername()) != null) {
+            errors.rejectValue("username","Duplicate.userForm.username", "Such username already exists.");
+        }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Required", "This field is required.");
         if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.userForm.password", "Password must be over 6 characters.");
         }
 
-//        if (!user.getConfirmPassword().equals(user.getPassword())) {
-//            errors.rejectValue("confirmPassword", "Different.userForm.password");
-//        }
+        if (!user.getConfirmPassword().equals(user.getPassword())) {
+            errors.rejectValue("confirmPassword", "Different.userForm.password", "Password don't match.");
+        }
     }
 }

@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="container">
-    <form:form  method="POST" action="${contextPath}/username" class="form-signin">
+    <form:form  method="POST" class="form-signin">
         <h2 class="form-heading">Log in</h2>
         <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
@@ -29,6 +29,7 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
             <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
         </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form:form>
 </div>
 </body>

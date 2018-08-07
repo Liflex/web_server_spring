@@ -1,16 +1,13 @@
-package ru.dmitartur.controller.adminControllers;
+package ru.dmitartur.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.dmitartur.model.Role;
 import ru.dmitartur.model.User;
 import ru.dmitartur.service.abstraction.UserService;
-
-import javax.faces.context.FacesContext;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 @Controller
 @RequestMapping(value="/admin")
@@ -24,10 +21,11 @@ public class ListController {
     }
 
 
-    @GetMapping("/list")
-    public String getAllUsers(Model model) {
+    @GetMapping(value = "/list")
+    public String registration(Model model) {
+        model.addAttribute("user", new User());
         model.addAttribute("Users", userService.getAll());
-        model.addAttribute("User", new User());
+        model.addAttribute("roles", Role.values());
         return "list";
     }
 }

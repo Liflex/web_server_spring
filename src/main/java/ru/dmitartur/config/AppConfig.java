@@ -2,33 +2,32 @@ package ru.dmitartur.config;
 
 
 import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.validation.Validator;
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
-import ru.dmitartur.service.abstraction.SecurityService;
-import ru.dmitartur.service.impl.SecurityServiceImpl;
+import ru.dmitartur.service.impl.UserDetailsServiceImpl;
 
 import javax.sql.DataSource;
 import java.util.Arrays;
@@ -44,6 +43,8 @@ import java.util.ResourceBundle;
 public class AppConfig extends AbstractSecurityWebApplicationInitializer implements WebMvcConfigurer {
     private ResourceBundle rb = ResourceBundle.getBundle("application");
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
 
     @Bean
@@ -52,8 +53,6 @@ public class AppConfig extends AbstractSecurityWebApplicationInitializer impleme
         resolver.setOrder(1);
         resolver.setPrefix("/WEB-INF/views/");
         resolver.setSuffix(".jsp");
-        // использование JstlView позволяет делать JSTL-инъекции в динамические страницы или фрагменты страниц
-        resolver.setViewClass(JstlView.class);
         return resolver;
     }
 
@@ -99,6 +98,18 @@ public class AppConfig extends AbstractSecurityWebApplicationInitializer impleme
         return transactionManager;
     }
 
+    @Bean
+    public PasswordEncoder getPasswordEncoder () {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+        return authProvider;
+    }
 
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
@@ -112,8 +123,5 @@ public class AppConfig extends AbstractSecurityWebApplicationInitializer impleme
         return hibernateProperties;
     }
 
-//    @Bean
-//    public SecurityService getSecurityService () {
-//        return new SecurityServiceImpl();
-//    }
+
 }

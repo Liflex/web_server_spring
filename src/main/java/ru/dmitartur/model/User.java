@@ -23,14 +23,15 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
 
+    @Transient
+    private String confirmPassword;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
     public User() {
-        setActive(true);
-        setRoles(Collections.singleton(Role.USER));
     }
 
     public User(long id) {
@@ -51,6 +52,12 @@ public class User implements UserDetails {
         this.password = password;
         this.active = active;
         this.roles = roles;
+    }
+
+    public User(String username, String password, String confirmPassword) {
+        this.username = username;
+        this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
     public long getId() {
@@ -75,6 +82,14 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public Set<Role> getRoles() {
