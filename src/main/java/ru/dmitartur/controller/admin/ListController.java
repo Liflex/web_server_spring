@@ -13,7 +13,7 @@ import ru.dmitartur.service.abstraction.UserService;
 @RequestMapping(value="/admin")
 public class ListController {
 
-    public final UserService userService;
+    private final UserService userService;
 
     @Autowired
     public ListController(UserService userService) {

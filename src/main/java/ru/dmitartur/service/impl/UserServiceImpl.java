@@ -4,6 +4,7 @@ package ru.dmitartur.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.dmitartur.dao.abstraction.UserDAO;
 import ru.dmitartur.model.Role;
@@ -13,7 +14,7 @@ import ru.dmitartur.service.abstraction.UserService;
 import java.util.Collections;
 import java.util.List;
 
-@Service
+@Component
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;

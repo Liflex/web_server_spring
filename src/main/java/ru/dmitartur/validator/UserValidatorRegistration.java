@@ -43,9 +43,5 @@ public class UserValidatorRegistration implements Validator {
         if (user.getPassword().length() < 6 || user.getPassword().length() > 32) {
             errors.rejectValue("password", "Size.userForm.password", "Password must be over 6 characters.");
         }
-
-        if (!user.getConfirmPassword().equals(user.getPassword())) {
-            errors.rejectValue("confirmPassword", "Different.userForm.password", "Password don't match.");
-        }
     }
 }

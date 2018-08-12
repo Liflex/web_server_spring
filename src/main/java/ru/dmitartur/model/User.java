@@ -2,15 +2,12 @@ package ru.dmitartur.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
-@Component
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -23,8 +20,6 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
 
-    @Transient
-    private String confirmPassword;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -54,10 +49,9 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(String username, String password, String confirmPassword) {
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.confirmPassword = confirmPassword;
     }
 
     public long getId() {
@@ -82,14 +76,6 @@ public class User implements UserDetails {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public Set<Role> getRoles() {

@@ -43,7 +43,7 @@ public class RegistrationController {
             return new ModelAndView("registration", "user", user);
         }
         userService.add(user);
-        model.addAttribute("message", "Registered is successfully.");
+        //model.addAttribute("message", "Registered is successfully.");
 
         return new ModelAndView("login", "", new Object());
     }
