@@ -1104,53 +1104,87 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="277" parent="3" name="user_role"/>
-    <table id="278" parent="3" name="users"/>
-    <column id="279" parent="277" name="user_id">
+    <table id="277" parent="3" name="hibernate_sequence"/>
+    <table id="278" parent="3" name="role"/>
+    <table id="279" parent="3" name="user_role"/>
+    <table id="280" parent="3" name="users"/>
+    <column id="281" parent="277" name="next_val">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="282" parent="278" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="277" name="roles">
+    <column id="283" parent="278" name="role">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="281" parent="277" name="FKj345gk1bovqvfame88rcx7yyx">
+    <key id="284" parent="278" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="285" parent="279" name="user_id">
+      <Position>1</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="286" parent="279" name="role_id">
+      <Position>2</Position>
+      <DataType>bigint(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="287" parent="279" name="FKj345gk1bovqvfame88rcx7yyx">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <foreign-key id="282" parent="277" name="FKj345gk1bovqvfame88rcx7yyx">
+    <index id="288" parent="279" name="FKa68196081fvovjhkek5m97n3y">
+      <ColNames>role_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <foreign-key id="289" parent="279" name="FKj345gk1bovqvfame88rcx7yyx">
       <ColNames>user_id</ColNames>
       <RefSchemaName>listusers</RefSchemaName>
       <RefTableName>users</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="283" parent="278" name="id">
+    <foreign-key id="290" parent="279" name="FKa68196081fvovjhkek5m97n3y">
+      <ColNames>role_id</ColNames>
+      <RefSchemaName>listusers</RefSchemaName>
+      <RefTableName>role</RefTableName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="291" parent="280" name="id">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="278" name="active">
+    <column id="292" parent="280" name="active">
       <Position>2</Position>
       <DataType>bit(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="278" name="password">
+    <column id="293" parent="280" name="password">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="278" name="username">
+    <column id="294" parent="280" name="username">
       <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="287" parent="278" name="PRIMARY">
+    <key id="295" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

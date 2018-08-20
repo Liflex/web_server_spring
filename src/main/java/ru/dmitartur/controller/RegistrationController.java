@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import ru.dmitartur.model.Role;
 import ru.dmitartur.model.User;
@@ -16,7 +17,7 @@ import ru.dmitartur.validator.UserValidatorRegistration;
 
 import java.util.Iterator;
 
-@Controller
+@RestController
 public class RegistrationController {
 
     private final UserService userService;
@@ -30,10 +31,10 @@ public class RegistrationController {
     }
 
     @GetMapping(value = "/registration")
-    public String registration(Model model) {
+    public ModelAndView registration(Model model) {
         model.addAttribute("user", new User());
 
-        return "registration";
+        return new ModelAndView("registration");
     }
 
     @PostMapping(value = "/registration")
@@ -43,8 +44,7 @@ public class RegistrationController {
             return new ModelAndView("registration", "user", user);
         }
         userService.add(user);
-        //model.addAttribute("message", "Registered is successfully.");
 
-        return new ModelAndView("login", "", new Object());
+        return new ModelAndView("login");
     }
 }

@@ -16,21 +16,29 @@ import ru.dmitartur.service.impl.UserDetailsServiceImpl;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserDetailsServiceImpl userDetailsService;
+
+    private final AuthSuccessHandler authSuccessHandler;
+
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, AuthSuccessHandler authSuccessHandler) {
+        this.userDetailsService = userDetailsService;
+        this.authSuccessHandler = authSuccessHandler;
+    }
 
     // конфигурация web based security для конкретных http-запросов
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+
                     .antMatchers("/registration").permitAll()
-                    .antMatchers("/user/**").access("hasAnyAuthority('USER', 'ADMIN')")
+                    .antMatchers("/user").access("hasAnyAuthority('USER', 'ADMIN')")
                     .antMatchers("/admin/**").access("hasAnyAuthority('ADMIN')")
                     .and()
                 .formLogin()
                     .loginPage("/")
-                    .defaultSuccessUrl("/user")
+                    .successHandler(authSuccessHandler)
                     .permitAll()
                     .and()
                 .logout()

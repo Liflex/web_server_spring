@@ -1,14 +1,15 @@
 package ru.dmitartur.controller.user;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 public class MainController {
 
     @GetMapping("/user")
-    public String login(Model model) {
-        return "user";
+    public ModelAndView login(Model model) {
+        return new ModelAndView("user");
     }
 }

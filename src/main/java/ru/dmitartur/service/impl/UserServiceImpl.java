@@ -3,14 +3,13 @@ package ru.dmitartur.service.impl;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import ru.dmitartur.dao.abstraction.UserDAO;
 import ru.dmitartur.model.Role;
 import ru.dmitartur.model.User;
 import ru.dmitartur.service.abstraction.UserService;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void add(User o) {
         o.setActive(true);
-        o.setRoles(Collections.singleton(Role.USER));
+        o.setRoles(Collections.singletonList(new Role(1)));
         userDAO.add(o);
     }
 

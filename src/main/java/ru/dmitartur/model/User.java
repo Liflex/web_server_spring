@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -18,13 +18,13 @@ public class User implements UserDetails {
     private long id;
     private String username;
     private String password;
-    private boolean active;
+    private boolean active = true;
 
-
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable (name="user_role",
+            joinColumns=@JoinColumn (name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="role_id"))
+    private List<Role> roles;
 
     public User() {
     }
@@ -33,7 +33,7 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public User(long id, String username, String password, boolean active, Set<Role> roles) {
+    public User(long id, String username, String password, boolean active, List<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -42,7 +42,7 @@ public class User implements UserDetails {
     }
 
 
-    public User(String username, String password, boolean active, Set<Role> roles) {
+    public User(String username, String password, boolean active, List<Role> roles) {
         this.username = username;
         this.password = password;
         this.active = active;
@@ -78,11 +78,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 

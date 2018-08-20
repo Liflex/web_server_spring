@@ -2,7 +2,7 @@
 <head>
     <title>Admin panel</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/common.css}">
 </head>
 <body>
@@ -14,44 +14,74 @@
             <div class="container">
                 <form th:action="@{/admin/add}" th:object="${user}" method="POST" class="form-signin">
                     <h2 class="form-signin-heading">add new user</h2>
+
                     <div class="form-group">
                         <input type="text" th:field="*{username}"/>
                         <div>
-                            <span style="font-size: small; color: red; " th:if="${#fields.hasErrors('username')}"
-                                  th:errors="*{username}"></span>
+                                <span style="font-size: small; color: red; " th:if="${#fields.hasErrors('username')}"
+                                      th:errors="*{username}"></span>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <input type="password" th:field="*{password}"/>
                         <div>
-                            <span style="font-size: small; color: red; " th:if="${#fields.hasErrors('password')}"
-                                  th:errors="*{password}"></span>
+                                <span style="font-size: small; color: red; " th:if="${#fields.hasErrors('password')}"
+                                      th:errors="*{password}"></span>
                         </div>
                     </div>
+
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                 </form>
+
 
             </div>
         </div>
         <ul>
             <ul class="w3-ul">
-            <th:block th:each="usere : ${Users}">
-                <form th:action="@{/admin/update}" th:object="${usere}" method="POST" class="form-signin">
-                    <h2 class="form-signin-heading"></h2>
-                    <div class="form-group">
-                        <input type="text" id="username" name="username" th:value="*{username}"/>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="password" name="password" th:value="*{password}"/>
-                    </div>
-                    <input type="hidden" name="id" th:value="*{id}">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">change</button>
-                </form>
-                <form th:action="@{/admin/delete}" th:object="${usere}" method="POST" class="form-signin">
-                    <input type="hidden" id="id" name="id" th:value="*{id}">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">delete</button>
-                </form>
-            </th:block>
+                <h2 class="form-signin-heading">List of all users</h2>
+                <table border="2"  align="center" bgcolor="#0a996e" cellpadding="100">
+                    <tr>
+                        <th>username</th>
+                        <th>password</th>
+                    </tr>
+                    <th:block th:each="usere : ${Users}">
+                        <tr height="10">
+                            <form th:action="@{/admin/update}" th:object="${usere}" method="POST" class="form-signin">
+                                <h2 class="form-signin-heading"></h2>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" id="username" name="username" th:value="*{username}"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="text" id="password" name="password" th:value="*{password}"/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <li th:each="rol : ${roles}">
+                                            <input name="role_id" type="radio" th:value="${rol}" th:checked="${usere.roles.iterator().next().role.equals(rol)} ? 'checked'">
+                                            <label th:text="${rol}" ></label>
+                                    </li>
+                                </td>
+
+                                <input type="hidden" name="id" th:value="*{id}">
+                                <input type="hidden" name="_method" value="put"/>
+                                <td  width="15%" bgcolor="#FF0000">
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit">change</button>
+                                </td>
+                            </form>
+                            <form th:action="@{/admin/delete}" th:object="${usere}" method="POST" class="form-signin">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <input type="hidden" id="id" name="id" th:value="*{id}">
+                                <td width="15%" bgcolor="#0011ff">
+                                    <button class="btn btn-lg btn-primary btn-block" type="submit">delete</button>
+                                </td>
+                            </form>
+                        </tr>
+                    </th:block>
+                </table>
             </ul>
         </ul>
     </div>

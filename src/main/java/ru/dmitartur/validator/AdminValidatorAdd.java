@@ -27,7 +27,6 @@ public class AdminValidatorAdd implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
-
         ValidationUtils.rejectIfEmpty(errors, "username", "Required", "This field is required.");
         if (userService.get(user.getUsername()) != null) {
             errors.rejectValue("username","Duplicate.userForm.username", "Such username already exists.");

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import ru.dmitartur.model.User;
 import ru.dmitartur.service.abstraction.UserService;
@@ -31,10 +32,9 @@ public class AddController {
     public ModelAndView addNewUser(@ModelAttribute("user")User user, BindingResult bindingResult, Model model) {
         adminValidatorAdd.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("registration", "user", user);
+            return new ModelAndView("list", "user", user);
         }
         userService.add(user);
-        model.addAttribute("message", "Add new user is successfully.");
         model.addAttribute("Users", userService.getAll());
         return new ModelAndView("list", "user", new User());
     }
