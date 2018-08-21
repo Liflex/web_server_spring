@@ -2,41 +2,34 @@ package ru.dmitartur.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 import ru.dmitartur.model.User;
 import ru.dmitartur.service.abstraction.UserService;
-import ru.dmitartur.validator.AdminValidatorAdd;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Controller
-@RequestMapping(value="/admin")
+@RequestMapping(value = "/admin")
 public class AddController {
 
     private final UserService userService;
 
-    private final AdminValidatorAdd adminValidatorAdd;
-
     @Autowired
-    public AddController(UserService userService, AdminValidatorAdd adminValidatorAdd) {
+    public AddController(UserService userService) {
         this.userService = userService;
-        this.adminValidatorAdd = adminValidatorAdd;
     }
 
 
     @PostMapping(value = "/add")
-    public ModelAndView addNewUser(@ModelAttribute("user")User user, BindingResult bindingResult, Model model) {
-        adminValidatorAdd.validate(user, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return new ModelAndView("list", "user", user);
+    public void addNewUser(@ModelAttribute("user") User user, HttpServletResponse response) {
+        if (userService.get(user.getUsername()) == null) userService.add(user);
+        try {
+            response.sendRedirect("/admin/list");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        userService.add(user);
-        model.addAttribute("Users", userService.getAll());
-        return new ModelAndView("list", "user", new User());
     }
-
 }
