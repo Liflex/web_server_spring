@@ -16,16 +16,16 @@
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
-                    <h2>List of all users</h2>
+                    <h2><i class="fas fa-list-ul"></i> List of all users</h2>
                     <table class="table table-condensed table-responsive table-sm">
                         <thead class="thead-dark">
                         <tr>
                             <th class="labelimg"><i class="fas fa-users"></i> Username</th>
                             <th class="labelimg"><i class="fas fa-key"></i> Password</th>
                             <th class="labelimg"><i class="far fa-star"></i></i> Status</th>
+                            <th class="labelimg"><i class="fas fa-heart"></i></i> Active</th>
                         </tr>
                         </thead>
-
                         <th:block th:each="usere : ${Users}">
                             <tr>
                                 <td class="labelimg">
@@ -38,6 +38,9 @@
                                 <td class="labelimg">
                                     <span class="fas fa-brain" style="color:rgb(255,88,84)" th:attr="style=${usere.roles.iterator().next().role.equals('ADMIN')} ? 'color:rgb(255,88,84)': 'color:rgb(141,255,120)'"></span>
                                     <label th:text="${usere.roles.iterator().next().role}" style="color:rgb(92,197,255)"></label>
+                                </td>
+                                <td class="labelimg text-center">
+                                    <span class="" style="color:rgb(255,88,84)" th:attr="class=${usere.active==false} ? 'far fa-heart': 'fa fa-heart fa-beat'"></span>
                                 </td>
                                 <td>
                                     <!--<div class="form-check" th:each="rol : ${roles}">-->
@@ -62,8 +65,7 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content changeWindow">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="ChangeModalLabel" style="color:#0a8aff">Добавление нового
-                                                    пользователя</h5>
+                                                <h5 class="modal-title" id="ChangeModalLabel" style="color:#0a8aff"><i class="fas fa-exchange-alt"></i> Change</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -161,85 +163,5 @@
         </div>
     </div>
 </div>
-<!--<div class="w3-container w3-center w3-margin-bottom w3-padding">-->
-<!--<div class="w3-card-4">-->
-<!--<div class="w3-container w3-light-blue">-->
-<!--</div>-->
-<!--<div class="w3-card-4">-->
-<!--<div class="container">-->
-<!--<form th:action="@{/admin/add}" th:object="${user}" method="POST" class="form-signin">-->
-<!--<h2 class="form-signin-heading">add new user</h2>-->
-
-<!--<div class="form-group">-->
-<!--<input type="text" th:field="*{username}"/>-->
-<!--<div>-->
-<!--<span style="font-size: small; color: red; " th:if="${#fields.hasErrors('username')}"-->
-<!--th:errors="*{username}"></span>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="form-group">-->
-<!--<input type="password" th:field="*{password}"/>-->
-<!--<div>-->
-<!--<span style="font-size: small; color: red; " th:if="${#fields.hasErrors('password')}"-->
-<!--th:errors="*{password}"></span>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>-->
-<!--</form>-->
-
-
-<!--</div>-->
-<!--</div>-->
-<!--<ul>-->
-<!--<ul class="w3-ul">-->
-<!--<h2 class="form-signin-heading">List of all users</h2>-->
-<!--<table border="2"  align="center" bgcolor="#0a996e" cellpadding="100">-->
-<!--<tr>-->
-<!--<th>username</th>-->
-<!--<th>password</th>-->
-<!--</tr>-->
-<!--<th:block th:each="usere : ${Users}">-->
-<!--<tr height="10">-->
-<!--<form th:action="@{/admin/update}" th:object="${usere}" method="POST" class="form-signin">-->
-<!--<h2 class="form-signin-heading"></h2>-->
-<!--<td>-->
-<!--<div class="form-group">-->
-<!--<input type="text" id="username" name="username" th:value="*{username}"/>-->
-<!--</div>-->
-<!--</td>-->
-<!--<td>-->
-<!--<div class="form-group">-->
-<!--<input type="text" id="password" name="password" th:value="*{password}"/>-->
-<!--</div>-->
-<!--</td>-->
-<!--<td>-->
-<!--<li th:each="rol : ${roles}">-->
-<!--<input name="role_id" type="radio" th:value="${rol}" th:checked="${usere.roles.iterator().next().role.equals(rol)} ? 'checked'">-->
-<!--<label th:text="${rol}" ></label>-->
-<!--</li>-->
-<!--</td>-->
-
-<!--<input type="hidden" name="id" th:value="*{id}">-->
-<!--<input type="hidden" name="_method" value="put"/>-->
-<!--<td  width="15%" bgcolor="#FF0000">-->
-<!--<button class="btn btn-lg btn-primary btn-block" type="submit">change</button>-->
-<!--</td>-->
-<!--</form>-->
-<!--<form th:action="@{/admin/delete}" th:object="${usere}" method="POST" class="form-signin">-->
-<!--<input type="hidden" name="_method" value="delete"/>-->
-<!--<input type="hidden" id="id" name="id" th:value="*{id}">-->
-<!--<td width="15%" bgcolor="#0011ff">-->
-<!--<button class="btn btn-lg btn-primary btn-block" type="submit">delete</button>-->
-<!--</td>-->
-<!--</form>-->
-<!--</tr>-->
-<!--</th:block>-->
-<!--</table>-->
-<!--</ul>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
 </body>
 </html>
