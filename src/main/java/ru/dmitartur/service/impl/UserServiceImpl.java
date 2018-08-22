@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(User o) {
-        o.setActive(true);
         o.setRoles(Collections.singletonList(new Role(1)));
         userDAO.add(o);
     }

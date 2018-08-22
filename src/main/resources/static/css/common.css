@@ -41,9 +41,6 @@ body {
     background-size: cover;
 }
 
-.fa-beat {
-    animation:fa-beat 5s ease infinite;
-}
 @keyframes fa-beat {
     0% {
         transform:scale(1);
@@ -71,6 +68,9 @@ body {
     }
 }
 
+.fa-beat {
+    animation:fa-beat 5s ease infinite;
+}
 
 .heart {
     color:red;

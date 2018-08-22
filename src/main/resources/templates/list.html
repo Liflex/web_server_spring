@@ -4,7 +4,7 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/common.css}" >
+    <link rel="stylesheet" th:href="@{/css/common.css}">
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
@@ -29,28 +29,23 @@
                         <th:block th:each="usere : ${Users}">
                             <tr>
                                 <td class="labelimg">
-                                    <span class="fas fa-user-astronaut" style="color:rgb(255,88,84)" th:attr="style=${usere.roles.iterator().next().role.equals('ADMIN')} ? 'color:rgb(255,88,84)': 'color:rgb(141,255,120)'"></span>
+                                    <span class="fas fa-user-astronaut" style="color:rgb(255,88,84)"
+                                          th:attr="style=${usere.roles.iterator().next().role.equals('ADMIN')} ? 'color:rgb(255,88,84)': 'color:rgb(141,255,120)'"></span>
                                     <label th:text="${usere.username}" style="color:rgb(92,197,255)"></label>
                                 </td>
                                 <td class="labelimg">
                                     <label th:text="${usere.password}" style="color:rgb(92,197,255)"></label>
                                 </td>
                                 <td class="labelimg">
-                                    <span class="fas fa-brain" style="color:rgb(255,88,84)" th:attr="style=${usere.roles.iterator().next().role.equals('ADMIN')} ? 'color:rgb(255,88,84)': 'color:rgb(141,255,120)'"></span>
-                                    <label th:text="${usere.roles.iterator().next().role}" style="color:rgb(92,197,255)"></label>
+                                    <span class="fas fa-brain" style="color:rgb(255,88,84)"
+                                          th:attr="style=${usere.roles.iterator().next().role.equals('ADMIN')} ? 'color:rgb(255,88,84)': 'color:rgb(141,255,120)'"></span>
+                                    <label th:text="${usere.roles.iterator().next().role}"
+                                           style="color:rgb(92,197,255)"></label>
                                 </td>
                                 <td class="labelimg text-center">
-                                    <span class="" style="color:rgb(255,88,84)" th:attr="class=${usere.active==false} ? 'far fa-heart': 'fa fa-heart fa-beat'"></span>
+                                    <span class="" style="color:rgb(255,88,84)"
+                                          th:attr="class=${usere.active==false} ? 'far fa-heart': 'fa fa-heart fa-beat'"></span>
                                 </td>
-                                <td>
-                                    <!--<div class="form-check" th:each="rol : ${roles}">-->
-                                    <!--<input class="form-check-input" name="role_id" type="radio"-->
-                                    <!--th:value="${rol}"-->
-                                    <!--th:checked="${usere.roles.iterator().next().role.equals(rol)} ? 'checked'">-->
-                                    <!--<label class="form-check-label" th:text="${rol}"></label>-->
-                                    <!--</div>-->
-                                </td >
-                                <!--<input type="hidden" name="id" th:value="${usere.id}">-->
                                 <input type="hidden" name="_method" value="put"/>
                                 <td>
                                     <button class="btn btn-outline-warning" type="button"
@@ -65,27 +60,51 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content changeWindow">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="ChangeModalLabel" style="color:#0a8aff"><i class="fas fa-exchange-alt"></i> Change</h5>
+                                                <h5 class="modal-title" id="ChangeModalLabel" style="color:#0a8aff"><i
+                                                        class="fas fa-exchange-alt"></i> Change</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                         aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
+                                            <!--Модальное окно изменения Данных-->
                                             <form th:action="@{/admin/update}" th:object="${usere}" method="POST"
                                                   class="form-group">
                                                 <div class="modal-body">
-                                                    <label for="register-name" class="col-form-label" style="color:#0a8aff"><i class="fas fa-user"></i>
+                                                    <label for="register-name" class="col-form-label"
+                                                           style="color:#0a8aff"><i class="fas fa-user"></i>
                                                         Username:</label>
                                                     <input class="form-control form-control-sm"
                                                            type="text"
                                                            id="user" name="username"
                                                            th:value="*{username}"/>
-                                                    <label for="register-password" class="col-form-label" style="color:#0a8aff"><i class="fas fa-key"></i>
+                                                    <label for="register-password" class="col-form-label"
+                                                           style="color:#0a8aff"><i class="fas fa-key"></i>
                                                         Password:</label>
                                                     <input class="form-control form-control-sm"
                                                            type="text"
                                                            id="pass" name="password"
                                                            th:value="*{password}"/>
+                                                    <!--Определение прав пользователя-->
+                                                    <div class="form-check form-check-inline" th:each="rol : ${roles}">
+                                                        <input class="form-check-input" name="roles" type="radio"
+                                                               th:value="${rol}"
+                                                               th:checked="${usere.roles.iterator().next().role.equals(rol)} ? 'checked'">
+                                                        <span class="fas fa-2x fa-brain" style="color:rgb(255,88,84)"
+                                                              th:attr="style=${rol.equals('ADMIN')} ? 'color:rgb(255,88,84)': 'color:rgb(141,255,120)'"></span>
+                                                        <label class="form-check-label" th:text="${rol}"
+                                                               style="color:#0a8aff"></label>
+                                                        <!--Кнопка индикатора активности пользователя-->
+                                                    </div>
+                                                    <div class="form-check text-right">
+                                                        <input class=""  name="active_status" type="checkbox" value="true"
+                                                               id="defaultCheck1"  th:checked="${usere.active==true} ? 'checked'" >
+                                                        <label class="form-check-label" style="color:rgb(255,88,84)" th:attr="class=${usere.active==false} ? 'far fa-2x fa-heart': 'fa fa-heart fa-2x  fa-beat'" for="defaultCheck1">
+                                                            Active status
+                                                        </label>
+                                                    </div>
+                                                    <input type="hidden" name="id" th:value="*{id}"/>
+                                                    <input type="hidden" name="_method" value="put"/>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger"
@@ -112,8 +131,8 @@
                 </div>
                 <!--ниже сделаем кнопку logоut-->
                 <div class="col-md-6">
-                    <button button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#RegisterModal"> <i class="fas fa-registered"></i>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#RegisterModal"><i class="fas fa-registered"></i>
                         Регистрация нового пользователя
                     </button>
                     <!-- Modal Register Window-->
@@ -123,7 +142,8 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content registerimg">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="RegisterModalLabel" style="color:#0a8aff">Добавление нового пользователя</h5>
+                                    <h5 class="modal-title" id="RegisterModalLabel" style="color:#0a8aff">Добавление
+                                        нового пользователя</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -131,15 +151,16 @@
                                 <form th:action="@{/admin/add}" th:object="${user}" method="POST" class="form-group">
                                     <div class="modal-body">
 
-                                        <label for="register-name" class="col-form-label" style="color:#0a8aff"><i class="fas fa-user"></i>
+                                        <label for="register-name" class="col-form-label" style="color:#0a8aff"><i
+                                                class="fas fa-user"></i>
                                             Username:</label>
                                         <input class="form-control form-control-sm" id=register-name type="text"
                                                th:field="*{username}"/>
-                                        <label for="register-password" class="col-form-label" style="color:#0a8aff"><i class="fas fa-key"></i>
+                                        <label for="register-password" class="col-form-label" style="color:#0a8aff"><i
+                                                class="fas fa-key"></i>
                                             Password:</label>
                                         <input class="form-control form-control-sm" id=register-password type="text"
                                                th:field="*{password}"/>
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal"><i
@@ -155,7 +176,7 @@
                 </div>
                 <div class="col-md-2">
                     <form th:action="@{/logout}" method="GET">
-                        <button class="btn btn-info" type="submit" ><i class="fas fa-sign-out-alt"></i> Logout</button>
+                        <button class="btn btn-info" type="submit"><i class="fas fa-sign-out-alt"></i> Logout</button>
                     </form>
                 </div>
                 <div class="col-md-4"></div>

@@ -30,18 +30,11 @@ public class RegistrationController {
         this.userValidatorRegistration = userValidatorRegistration;
     }
 
-    @GetMapping(value = "/registration")
-    public ModelAndView registration(Model model) {
-        model.addAttribute("user", new User());
-
-        return new ModelAndView("registration");
-    }
-
     @PostMapping(value = "/registration")
     public ModelAndView registration(@ModelAttribute("user")User user, BindingResult bindingResult, Model model) {
         userValidatorRegistration.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-            return new ModelAndView("registration", "user", user);
+            return new ModelAndView("login", "user", user);
         }
         userService.add(user);
 

@@ -18,7 +18,6 @@ public class AuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessHa
         for (GrantedAuthority s : auth.getAuthorities()) {
             role = s.getAuthority();
         }
-
         String targetUrl = "";
         if(role.contains("USER")) {
             targetUrl = "/user";
