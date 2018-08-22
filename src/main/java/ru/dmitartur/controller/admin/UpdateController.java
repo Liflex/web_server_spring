@@ -28,7 +28,6 @@ public class UpdateController {
     protected  void updateUser(@ModelAttribute("user")User user, HttpServletResponse response, HttpServletRequest req) {
         try {
             if (req.getParameter("roles").equals("ADMIN")) {
-                user.setRoles(Collections.singletonList(new Role(2)));
             } else {
                 user.setRoles(Collections.singletonList(new Role(1)));
             }
@@ -38,7 +37,6 @@ public class UpdateController {
             } catch (Exception ignored) {
                 user.setActive(false);
             }
-            user.setId(Long.valueOf(req.getParameter("id")));
             userService.update(user);
             response.sendRedirect("/admin/list");
         } catch (Exception e) {
