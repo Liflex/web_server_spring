@@ -13,15 +13,18 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
-
+<!--Звзды-->
 <body class="stars">
 <audio th:src="@{/music/map.mp3}" autoplay="autoplay" loop>
 </audio>
+<!--Мерцание звезд-->
 <div class="twinkling">
     <div class="container">
+        <!--облака-->
         <div class="clouds">
             <div class="row">
                 <div class="col-md-12">
+                    <!--space - магия вращения -->
                     <form th:action="@{/}" method="post" class="form-signin space">
                         <h2 class="form-heading" style="color:rgb(0,76,255)"><span class="fas fa-user-astronaut"
                                                                                    style="color:rgb(113,18,255)"></span>
