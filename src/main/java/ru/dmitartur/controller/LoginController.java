@@ -29,4 +29,9 @@ public class  LoginController {
         }
         response.sendRedirect("/admin/list");
     }
+
+    @GetMapping (value = "/oauth_login")
+    public String logidfn() {
+        return "ok";
+    }
 }

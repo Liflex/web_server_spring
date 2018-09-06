@@ -28,13 +28,8 @@ public class ListController {
 
     @GetMapping(value = "/list")
     public ModelAndView list(Model model) {
-        List<String> roles = new ArrayList<>();
-        roles.add("USER");
-        roles.add("ADMIN");
-
         model.addAttribute("user", new User());
         model.addAttribute("Users", userService.getAll());
-        model.addAttribute("roles", roles);
         return new ModelAndView("list");
     }
 }
