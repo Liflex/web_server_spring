@@ -18,8 +18,7 @@ import java.util.List;
 public class UserDAOHibernateImpl  implements UserDAO {
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Transactional (propagation = Propagation.REQUIRED)
+    
     @Override
     public User get(String username) {
         User user = null;
@@ -30,22 +29,18 @@ public class UserDAOHibernateImpl  implements UserDAO {
         return user;
     }
     @SuppressWarnings("unchecked")
-    @Transactional (propagation = Propagation.REQUIRED)
     @Override
     public List<User> getAll() {
         return (List<User>) entityManager.createQuery("From User").getResultList();
     }
-    @Transactional (propagation = Propagation.REQUIRED)
     @Override
     public void add(User t) {
         entityManager.persist(t);
     }
-    @Transactional (propagation = Propagation.REQUIRED)
     @Override
     public void update(User t) {
         entityManager.merge(t);
     }
-    @Transactional (propagation = Propagation.REQUIRED)
     @Override
     public void delete(long id) {
         User user = new User(id);

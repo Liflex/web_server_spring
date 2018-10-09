@@ -22,7 +22,8 @@ public class  LoginController {
     }
 
     @GetMapping(value = "/logout")
-    public void logout(final HttpServletRequest request, final HttpServletResponse response, Model model) throws IOException {
+    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.getAttribute("id");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
