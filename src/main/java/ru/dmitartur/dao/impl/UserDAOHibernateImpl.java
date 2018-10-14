@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dmitartur.dao.abstraction.UserDAO;
-import ru.dmitartur.model.Role;
 import ru.dmitartur.model.User;
 
 import javax.persistence.EntityManager;

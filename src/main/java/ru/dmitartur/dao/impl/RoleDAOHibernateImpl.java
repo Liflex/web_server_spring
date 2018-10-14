@@ -13,11 +13,11 @@ import javax.persistence.PersistenceContext;
 @Repository
 @Transactional
 public class RoleDAOHibernateImpl implements RoleDAO {
+
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
-    @Transactional (propagation = Propagation.REQUIRED)
     public Role get(Long id) {
         Role role = null;
         try {
@@ -28,7 +28,6 @@ public class RoleDAOHibernateImpl implements RoleDAO {
     }
 
     @Override
-    @Transactional (propagation = Propagation.REQUIRED)
     public void add(Role t) {
         entityManager.merge(t);
     }

@@ -1,8 +1,11 @@
 package ru.dmitartur.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Entity
@@ -16,10 +19,11 @@ public class Role implements GrantedAuthority {
 
     private String role;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_role",
             joinColumns=@JoinColumn(name="role_id"),
             inverseJoinColumns=@JoinColumn(name="user_id"))
+    @JsonBackReference
     private List<User> user;
 
     public Role() {
@@ -75,4 +79,6 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return role;
     }
+
+
 }

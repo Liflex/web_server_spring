@@ -2,16 +2,16 @@ package ru.dmitartur.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.dmitartur.model.Role;
 import ru.dmitartur.model.User;
 import ru.dmitartur.service.abstraction.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
 
 @Controller
 @RequestMapping(value="/admin")

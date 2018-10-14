@@ -8,8 +8,6 @@ import org.springframework.validation.Validator;
 import ru.dmitartur.model.User;
 import ru.dmitartur.service.abstraction.UserService;
 
-import java.util.ResourceBundle;
-
 @Component
 public class UserValidatorRegistration implements Validator {
 

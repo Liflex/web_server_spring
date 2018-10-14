@@ -26,7 +26,7 @@ public class Init {
             roleDAO.add(new Role(2, "ADMIN"));
         }
         if((test1 = userDAO.get("Admin"))  == null) {
-            userDAO.update(new User("Admin", "Admin", true, Collections.singletonList(new Role(1))));
+            userDAO.update(new User("Admin", "Admin", true, Collections.singletonList(new Role(2))));
         }
     }
 }
